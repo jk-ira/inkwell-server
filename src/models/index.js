@@ -5,6 +5,7 @@ const sequelize = new Sequelize(config.databaseUrl, {
   dialect: 'postgres',
   logging: false,
   define: { underscored: true }, // camelCase attributes <-> snake_case columns
+  ...(process.env.DB_SSL === 'true' && { dialectOptions: { ssl: { require: true, rejectUnauthorized: false } } }),
 });
 
 const User = require('./user')(sequelize, DataTypes);
